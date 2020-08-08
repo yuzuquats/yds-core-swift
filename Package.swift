@@ -19,13 +19,18 @@ let package = Package(
         "YZDesignSystemMacOS",
         "YZImage",
     ]),
+    .library(
+      name: "YZDesignSystemCatalyst",
+      targets: [
+        "YZDesignSystemMacOS",
+        "YZImage",
+      ]),
   ],
   targets: [
     .target(
       name: "YZDesignSystemMacOS",
       path: "Sources/YZDesignSystem",
       sources: [
-        "Commands.swift",
         "YZVisualEffectViewMacOS.swift",
       ]
     ),
@@ -52,6 +57,13 @@ let package = Package(
         "EnvironmentValues+ImageCache.swift",
         "ImageCache.swift",
         "ImageLoader.swift",
+      ]
+    ),
+    .target(
+      name: "YZDesignSystemCatalyst",
+      path: "Sources/YZDesignSystem",
+      sources: [
+        "Commands.swift",
       ]
     ),
     .testTarget(
