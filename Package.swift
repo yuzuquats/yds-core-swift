@@ -41,6 +41,7 @@ let package = Package(
         "Button.swift",
         "Page.swift",
         "Utils.swift",
+        "VisualEffectView.swift",
         "YZClockView.swift",
         "YZDepressedView.swift",
         "YZDesignSystem.swift",
