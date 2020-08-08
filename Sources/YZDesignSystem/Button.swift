@@ -36,13 +36,13 @@ public struct Button : View
     .gesture(
       DragGesture(minimumDistance: 0)
         .onChanged({ _ in
-          if !pressed {
-            pressed = true
+          if !self.pressed {
+            self.pressed = true
           }
         })
         .onEnded { _ in
-          if pressed {
-            pressed = false
+          if self.pressed {
+            self.pressed = false
           }
         }
         .simultaneously(

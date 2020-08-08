@@ -5,9 +5,10 @@ public struct ImageCacheKey: EnvironmentKey {
 }
 
 public extension EnvironmentValues {
-  public var imageCache: ImageCache {
+  var imageCache: ImageCache {
     get { self[ImageCacheKey.self] }
     set { self[ImageCacheKey.self] = newValue }
   }
 }
+
 
