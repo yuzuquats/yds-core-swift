@@ -16,12 +16,14 @@ let package = Package(
     .library(
       name: "YZDesignSystemMacOS",
       targets: [
+        "YZDesignSystem",
         "YZDesignSystemMacOS",
         "YZImage",
     ]),
     .library(
       name: "YZDesignSystemCatalyst",
       targets: [
+        "YZDesignSystem",
         "YZDesignSystemMacOS",
         "YZImage",
       ]),
@@ -38,7 +40,6 @@ let package = Package(
       name: "YZDesignSystem",
       path: "Sources/YZDesignSystem",
       sources: [
-        "Button.swift",
         "Page.swift",
         "Utils.swift",
         "VisualEffectView.swift",
@@ -64,6 +65,7 @@ let package = Package(
       name: "YZDesignSystemCatalyst",
       path: "Sources/YZDesignSystem",
       sources: [
+        "Button.swift",
         "Commands.swift",
       ]
     ),
