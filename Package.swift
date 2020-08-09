@@ -16,15 +16,12 @@ let package = Package(
     .library(
       name: "YZDesignSystemMacOS",
       targets: [
-        "YZDesignSystem",
         "YZDesignSystemMacOS",
-        "YZImage",
     ]),
     .library(
       name: "YZDesignSystemCatalyst",
       targets: [
-        "YZDesignSystem",
-        "YZDesignSystemMacOS",
+        "YZDesignSystemCatalyst",
         "YZImage",
       ]),
   ],
