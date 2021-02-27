@@ -1,6 +1,7 @@
+#if !os(iOS)
 import Foundation
-import AppKit
 import SwiftUI
+import AppKit
 
 public struct VisualEffectView: NSViewRepresentable
 {
@@ -22,3 +23,5 @@ public struct VisualEffectView: NSViewRepresentable
     nsView.material = material
   }
 }
+
+#endif

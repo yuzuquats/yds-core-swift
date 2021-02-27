@@ -8,7 +8,9 @@ final class FloatContainer {
   var value: CGFloat = 0
 }
 
-public struct YZSwiftUIPagerView<Content: View & Identifiable>: View {
+public struct Pager<Content: View & Identifiable>: View {
+  
+  private let enableScale: Bool
   
   @Binding public var index: Int
   @State private var offset: CGFloat = 0
@@ -18,9 +20,10 @@ public struct YZSwiftUIPagerView<Content: View & Identifiable>: View {
   @State private var previousIndex : IntContainer = IntContainer()
   @State private var indexFromGesture : IntContainer = IntContainer()
   
-  public init(index: Binding<Int>, pages: [Content]) {
+  public init(index: Binding<Int>, pages: [Content], enableScale: Bool = false) {
     _index = index
     self.pages = pages
+    self.enableScale = enableScale
   }
 
   public var pages: [Content]
@@ -33,7 +36,7 @@ public struct YZSwiftUIPagerView<Content: View & Identifiable>: View {
   private func calculateNormalizedProgress(indexToUse: Int, width: CGFloat) -> CGFloat
   {
     let progress = abs(self.offset / width + CGFloat(indexToUse))
-    return YZSwiftUIPagerView.bezierBlend(t: progress)
+    return Pager.bezierBlend(t: progress)
   }
   
   private func calculateOffset(width: CGFloat) -> CGFloat
@@ -43,6 +46,9 @@ public struct YZSwiftUIPagerView<Content: View & Identifiable>: View {
   
   private func calculateScale(progress: CGFloat, selectedIndex: Int) -> CGFloat
   {
+    if !self.enableScale {
+      return 1
+    }
     if self.index != selectedIndex {
       return 0.9 + 0.1 * progress
     } else {
@@ -58,13 +64,13 @@ public struct YZSwiftUIPagerView<Content: View & Identifiable>: View {
           self.pages[i]
             .frame(width: width, height: nil)
             .scaleEffect(self.calculateScale(progress: progress, selectedIndex: i))
-            .animation(.linear(duration: 0.3))
+            .animation(.linear(duration: 0.2))
         }
       }
     }
     .content.offset(x: self.calculateOffset(width: width))
     .frame(width: width, height: nil, alignment: .leading)
-    .highPriorityGesture(
+    .gesture(
       DragGesture()
         .onChanged({ value in
           self.isGestureActive = true
@@ -78,7 +84,9 @@ public struct YZSwiftUIPagerView<Content: View & Identifiable>: View {
           if value.predictedEndTranslation.width > width / 2, self.index > 0 {
             self.index -= 1
           }
-          withAnimation(.linear(duration: 0.3)) { self.offset = -width * CGFloat(self.index) }
+          withAnimation(.easeOut(duration: 0.2)) {
+            self.offset = -width * CGFloat(self.index)
+          }
           DispatchQueue.main.async { self.isGestureActive = false }
         }))
   }
@@ -87,7 +95,10 @@ public struct YZSwiftUIPagerView<Content: View & Identifiable>: View {
   {
     GeometryReader { geometry -> AnyView in
       let previousIndex = self.previousIndex.value
-      var normalizedProgress: CGFloat = self.calculateNormalizedProgress(indexToUse: self.isGestureActive ? self.indexFromGesture.value : self.index, width: geometry.size.width)
+      var normalizedProgress: CGFloat =
+        self.calculateNormalizedProgress(
+          indexToUse: self.isGestureActive ? self.indexFromGesture.value : self.index,
+          width: geometry.size.width)
       if previousIndex != self.index || self.waitingForGestureCompletion.value == 1 {
         if normalizedProgress != 0 {
           self.waitingForGestureCompletion.value = 1
@@ -101,8 +112,8 @@ public struct YZSwiftUIPagerView<Content: View & Identifiable>: View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
           self.scrollView(progress: normalizedProgress, width: geometry.size.width)
           
-          Text("\(normalizedProgress) - \(self.index) - \(geometry.size.width)")
-            .padding(12)
+//          Text("\(normalizedProgress) - \(self.index) - \(geometry.size.width) \(self.isGestureActive ? "active" : "inactive")")
+//            .padding(12)
         }
       )
     }

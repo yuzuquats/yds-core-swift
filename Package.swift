@@ -37,6 +37,8 @@ let package = Package(
       name: "YZDesignSystem",
       path: "Sources/YZDesignSystem",
       sources: [
+        "Card.swift",
+        "IdentifiableView.swift",
         "Page.swift",
         "Utils.swift",
         "VisualEffectView.swift",
@@ -45,7 +47,7 @@ let package = Package(
         "YZDesignSystem.swift",
         "YZElevatedView.swift",
         "YZTabBar.swift",
-        "YZSwiftUIPagerView.swift",
+        "Pager.swift",
       ]
     ),
     .target(

@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 
+@available(iOS 13.4, *)
 @available(macOS, introduced: 11)
 public struct Button : View
 {
@@ -16,9 +17,11 @@ public struct Button : View
   public var body: some View
   {
     HStack {
-      Image(systemName: "rectangle.rightthird.inset.fill")
-        .font(.system(size: 16.0))
-        .foregroundColor(Color.init(white: 0.5))
+      // TODO: update to macos 12
+//      Image()
+//      Image(systemName: "rectangle.rightthird.inset.fill")
+//        .font(.system(size: 16.0))
+//        .foregroundColor(Color.init(white: 0.5))
     }
     .background(
       RoundedRectangle(cornerRadius: 4)
